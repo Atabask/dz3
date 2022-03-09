@@ -1,9 +1,12 @@
 <template>
   <div>
-    <input placeholder="Date" v-model="value" />
-    <input placeholder="Type" v-model="category" />
-    <input placeholder="Amount" v-model="date" />
-    <button @click="onSave">Save!</button>
+    <button @click="showContainerInput" :key="show" >{{this.visible?'Close':'Open'}}</button>
+    <div v-show="visible">
+      <input placeholder="Date" v-model="date" />
+      <input placeholder="Type" v-model="category" />
+      <input placeholder="Amount" v-model="value" />
+      <button @click="onSave">Save!</button>
+    </div>
   </div>
 </template>
 
@@ -15,6 +18,7 @@ export default {
       value: "",
       category: "",
       date: "",
+      visible: false
     };
   },
   computed: {
@@ -35,6 +39,9 @@ export default {
           value: this.value 
         }
         this.$emit('addNewPayment', data)
+    },
+    showContainerInput() {
+      this.visible =! this.visible;
     }
   },
 };
