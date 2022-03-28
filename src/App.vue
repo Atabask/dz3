@@ -1,12 +1,14 @@
-  <template>
+<template>
   <div id="app">
     <div class="wrapper">
       <header>
         <div class="title">My personal costs</div>
+        <div>Total {{ getFPV }}</div>
       </header>
       <main>
-        <AddPaymentForm @addNewPayment="addData" ref="addpaymentForm"/>
-        <PaymentDisplay :list="paymentsList"/>
+        <AddPaymentForm @addNewPayment="addData" />
+        <PaymentDisplay :list="currentElements" />
+        <MyPagination  :length="paymentList.length" :n="n" :cur="cur" @changePage="onChangePage" />
       </main>
     </div>
   </div>
@@ -15,47 +17,46 @@
 <script>
 import PaymentDisplay from "./components/PaymentDisplay.vue";
 import AddPaymentForm from "./components/AddPaymentForm.vue";
+import MyPagination from "./components/MyPagination.vue";
 
 export default {
   name: 'App',
   components: {
     PaymentDisplay,
-    AddPaymentForm
+    AddPaymentForm,
+    MyPagination,
   },
 
     data() {
-    return {
-      paymentsList: []
+      return {
+        n: 5,
+        cur: 1
     };
   },
-  methods: {
-    fetchData () {
-      return [
-        {
-          date: '28.03.2020',
-          category: 'Food',
-          value: 169,
-        },
-        {
-          date: '24.03.2020',
-          category: 'Transport',
-          value: 360,
-          
-        },
-        {
-          date: '24.03.2020',
-          category: 'Food',
-          value: 532,
-        
-        },
-      ]
+  computed: {
+    getFPV() {
+      return this.$store.getters.getFullPaymentValue
     },
-    addData(data){
-      this.paymentsList.push(data)
+    paymentList() {
+      return this.$store.getters.getPaymentList
+    },
+    currentElements() {
+      return this.paymentList.slice(this.n * (this.cur - 1), this.n * (this.cur -1) + this.n)
     }
   },
-  created() {
-    this.paymentsList = this.fetchData()
+  methods: {
+    addData(data){
+      this.$store.commit('addDataPaymentList', data)
+    },
+    onChangePage(p) {
+      this.cur = p
+    }
+  },
+  async created() {
+    // this.$store.commit('setPaymentList', this.fetchData())
+    if(!this.paymentList?.length) {
+     await this.$store.dispatch('fetchData')
+    }
   },
 };
 </script>
