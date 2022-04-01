@@ -1,7 +1,6 @@
 <template>
   <div>
-    <button @click="showContainerInput" :key="show" >{{this.visible?'Close':'Open'}}</button>
-    <div v-show="visible">
+    <div >
       <input placeholder="Date" v-model="date" />
       <div class="category" v-if="categoryList.length">
         <select v-model="category">
@@ -19,13 +18,24 @@
 <script>
 export default {
   name: "AddPaymentForm",
+  props: {
+    defaultCategory: {type:String, default: "Sport"},
+    defaultValue: {type:String, default: ""}
+  },
   data() {
     return {
-      value: "",
-      category: "",
+      value: this.defaultValue,
+      category: this.defaultCategory,
       date: "",
-      visible: false
     };
+  },
+  watch: {
+    defaultCategory(newValue) {
+      this.category = newValue
+    },
+    defaultValue(newValue) {
+      this.value = newValue
+    }
   },
   computed: {
     getCurrentDate(){
@@ -48,14 +58,11 @@ export default {
         }
         this.$emit('addNewPayment', data)
     },
-    showContainerInput() {
-      this.visible =! this.visible;
-    }
   },
   async mounted() {
     if(!this.categoryList.length){
       await this.$store.dispatch('fetchCategoryList')
-      this.category = this.categoryList[0]
+      // this.category = this.categoryList[0]
     }
   }
 };
