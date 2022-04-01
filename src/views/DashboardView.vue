@@ -47,6 +47,9 @@ export default {
             case "Food": this.defaultCategory = "Food";
               break;
             case "Transport": this.defaultCategory = "Transport";
+              break;
+            case "Entertainment": this.defaultCategory = "Entertainment";
+              break;
           }
 
           this.defaultValue = newRoute.query["value"] ? newRoute.query["value"] : "" 
@@ -68,10 +71,6 @@ export default {
     currentElements() {
       return this.paymentList.slice(this.n * (this.cur - 1), this.n * (this.cur -1) + this.n)
     },
-    // isVisible(){  
-    //   return this.$route.params.page === 'form' || this.visible
-          
-    // }
   },
   methods: {
     addData(data){
@@ -88,18 +87,12 @@ export default {
   },
 
   async created() {
-    // this.$store.commit('setPaymentList', this.fetchData())
     if(!this.paymentList?.length) {
      await this.$store.dispatch('fetchData')
          this.cur = Number(this.$route.params.page)
     }
     
   },
-
-//   async mounted() {
-//       await this.$store.dispatch('fetchData')
-//       this.cur = Number(this.$route.params.page)
-//   },
 }
 </script>
 

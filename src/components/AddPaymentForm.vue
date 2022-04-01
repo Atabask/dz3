@@ -62,7 +62,6 @@ export default {
   async mounted() {
     if(!this.categoryList.length){
       await this.$store.dispatch('fetchCategoryList')
-      // this.category = this.categoryList[0]
     }
   }
 };
