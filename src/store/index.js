@@ -28,6 +28,9 @@ export default new Vuex.Store({
     },
     addAllPaymentList(state, payload) {
       state.allPaymentList = payload
+    },
+    paymentListDeleteItem(state, ) {
+      state.paymentList.splice(this.state.paymentList.indexOf(Event), 1) 
     }
   },
   actions: {
@@ -35,14 +38,9 @@ export default new Vuex.Store({
       return new Promise((resolve) => {
         setTimeout(() => {
           const items = []
-          for (let i = 1; i <= 2; i++ ) {
+          for (let i = 1; i <= 20; i++ ) {
             items.push(              
                 { "id": i++, "date": "20.03.2020", "category": "Food", "value": 169 },
-                { "id": i++, "date": "21.03.2020", "category": "Navigation", "value": 50 },
-                { "id": i++, "date": "22.03.2020", "category": "Sport", "value": 450 },             
-                { "id": i++, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
-                { "id": i++, "date": "24.03.2020", "category": "Education", "value": 1500 },
-                { "id": i++, "date": "25.03.2020", "category": "Food", "value": 200 }
               )
           }
           resolve(items)

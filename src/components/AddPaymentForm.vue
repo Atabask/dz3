@@ -56,6 +56,7 @@ export default {
           category: this.category,
           value: this.value 
         }
+        this.$store.commit("addDataPaymentList", data)
         this.$emit('addNewPayment', data)
     },
   },

@@ -1,65 +1,33 @@
 <template>
-  <div class="wrapper">
+  <div>
       <header>
         <div class="title">My personal costs</div>
         <div>Total {{ getFPV }}</div>
       </header>
       <main>
-        <button @click="showForm">{{visible?'Close':'Open'}}</button>
-        <AddPaymentForm v-show="visible" @addNewPayment="addData" :defaultValue="defaultValue" :defaultCategory="defaultCategory" />
+        <!-- <ModalWindowAddPaymentForm v-if="addFormShown" @close="addFormShown = false" :settings="settings" /> -->
         <PaymentDisplay :list="currentElements" />
         <MyPagination  :length="paymentList.length" :n="n" :cur="cur" @changePage="onChangePage" />
+        <button @click="addFormOpen">ADD NEW COST +</button>
       </main>
     </div>
 </template>
 
 <script>
-import PaymentDisplay from "../components/PaymentDisplay.vue";
-import AddPaymentForm from "../components/AddPaymentForm.vue";
-import MyPagination from "../components/MyPagination.vue";
 
 export default {
   name: 'MyDashboard',
   components: {
-    PaymentDisplay,
-    AddPaymentForm,
-    MyPagination,
-  },
+    PaymentDisplay: () => import("../components/PaymentDisplay.vue"),
+    MyPagination: () => import("../components/MyPagination.vue") ,
+    
+},
     data() {
     return {
         n: 5,
         cur: 1,
-        visible: false,
-        defaultCategory: "",
-        defaultValue: ""
+    
     };
-  },
-  watch: {
-    $route:{
-      immediate: true,
-      handler(newRoute) {
-        console.log(newRoute)
-        
-        if(newRoute.params.page) {
-          this.visible = true
-
-          switch(newRoute.params.page) {
-            case "Food": this.defaultCategory = "Food";
-              break;
-            case "Transport": this.defaultCategory = "Transport";
-              break;
-            case "Entertainment": this.defaultCategory = "Entertainment";
-              break;
-          }
-
-          this.defaultValue = newRoute.query["value"] ? newRoute.query["value"] : "" 
-        } else {
-          this.visible = false
-          this.defaultCategory = "Sport",
-          this.defaultValue = ""
-        }
-      }
-    }
   },
   computed: {
     getFPV() {
@@ -79,10 +47,15 @@ export default {
     onChangePage(p) {
       this.cur = p
     },
-    showForm() {
-      this.visible =! this.visible;
-      console.log(this.visible)
-    },
+    addFormOpen() {
+      
+      this.$modal.show("Addpaymentform", {
+         
+          content: "AddPaymentForm",
+          title: "Add new payment",
+          }
+      )
+    }
 
   },
 
