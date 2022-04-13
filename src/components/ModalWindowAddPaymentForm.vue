@@ -20,8 +20,8 @@
 export default {
     name: "ModalWindowAddPaymentForm",
     components: {
-    AddPaymentForm: () => import("./AddPaymentForm.vue") ,
-    MyAuth: () => import("./MyAuth.vue")
+      AddPaymentForm: () => import("./AddPaymentForm.vue") ,
+      MyAuth: () => import("./MyAuth.vue")
     },
     props: {
         settings: Object
@@ -61,6 +61,8 @@ export default {
   methods: {
       onCloseClick() {
         this.$modal.hide()
+        console.log(this.$modal.hide)
+    
     }
   }
     

@@ -16,10 +16,15 @@ export default {
                 console.log("show")
             },
 
+            showFormEdit(item ) {
+                this.EventBus.$emit("showFormEdit", item)
+                console.log(item)
+            },
+
             hide() {
                 this.EventBus.$emit("hide")
                 console.log("hide")
-            }
+            },
         }
     }
 }

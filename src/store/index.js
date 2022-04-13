@@ -7,13 +7,14 @@ export default new Vuex.Store({
   state: {
     paymentList: [],
     categoryList: [],
-    allPaymentList: []
+    allPaymentList: [],
+    paymentEditList: []
   },
   getters: {
     getPaymentList: state => state.paymentList,
-    getFullPaymentValue: state => {
-      return state.paymentList.reduce((res, cur )=> res + Number(cur.value), 0)
-    },
+    // getFullPaymentValue: state => {
+    //   return state.paymentList.reduce((res, cur )=> res + Number(cur.value), 0)
+    // },
     getCategoryList: state => state.categoryList
   },
   mutations: {
@@ -29,8 +30,20 @@ export default new Vuex.Store({
     addAllPaymentList(state, payload) {
       state.allPaymentList = payload
     },
-    paymentListDeleteItem(state, ) {
-      state.paymentList.splice(this.state.paymentList.indexOf(Event), 1) 
+    paymentListDeleteItem(state, id) {
+      state.paymentList.splice(this.state.paymentList.indexOf(Event, id), 1) 
+    },
+    paymentEditList(state, item){
+      state.paymentEditList = item 
+      console.log(state.paymentEditList)
+    },
+    paymentListEditItem(state, newItemEdit) {
+      
+      state.paymentList.splice(state.paymentEditList, 1, this.newItemEdit)
+
+      console.log(this.state.paymentEditList)
+      console.log(newItemEdit)
+      
     }
   },
   actions: {
@@ -38,9 +51,14 @@ export default new Vuex.Store({
       return new Promise((resolve) => {
         setTimeout(() => {
           const items = []
-          for (let i = 1; i <= 20; i++ ) {
+          for (let i = 1; i <= 10; i++ ) {
             items.push(              
-                { "id": i++, "date": "20.03.2020", "category": "Food", "value": 169 },
+              { "id": i++, "date": "20.03.2020", "category": "Food", "value": 169 },
+              { "id": i++, "date": "21.03.2020", "category": "Navigation", "value": 50 },
+              { "id": i++, "date": "22.03.2020", "category": "Sport", "value": 450 },             
+              { "id": i++, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
+              { "id": i++, "date": "24.03.2020", "category": "Education", "value": 1500 },
+              { "id": i++, "date": "25.03.2020", "category": "Food", "value": 200 }
               )
           }
           resolve(items)
@@ -63,40 +81,3 @@ export default new Vuex.Store({
 
 
 
-
-// {
-//   "page1": [
-//     { "id": 1, "date": "20.03.2020", "category": "Food", "value": 169 },
-//     { "id": 2, "date": "21.03.2020", "category": "Navigation", "value": 50 },
-//     { "id": 3, "date": "22.03.2020", "category": "Sport", "value": 450 }
-//     ],
-//   "page2": [
-//     { "id": 4, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
-//     { "id": 5, "date": "24.03.2020", "category": "Education", "value": 1500 },
-//     { "id": 6, "date": "25.03.2020", "category": "Food", "value": 200 }
-//   ]}
-
-
-
-// fetchData({commit}) {
-//   return this.state.allPaymentList.keys((resolve) => {
-//     setTimeout(() => {
-//       const pages = []
-//       pages.keys.push ({
-//         page1: [
-//           { "id": 1, "date": "20.03.2020", "category": "Food", "value": 169 },
-//           { "id": 2, "date": "21.03.2020", "category": "Navigation", "value": 50 },
-//           { "id": 3, "date": "22.03.2020", "category": "Sport", "value": 450 }
-//           ],
-//         page2: [
-//           { "id": 4, "date": "23.03.2020", "category": "Entertaiment", "value": 969 },
-//           { "id": 5, "date": "24.03.2020", "category": "Education", "value": 1500 },
-//           { "id": 6, "date": "25.03.2020", "category": "Food", "value": 200 }
-//         ]
-//       })
-//       resolve (pages)
-//     }, 2000);
-//   }).then(res => {
-//     commit('setPaymentList', res)
-//   })
-// }, 

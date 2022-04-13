@@ -1,5 +1,5 @@
 <template>
-  <div class="context-wrapper" v-if="isShow" >
+  <div class="context-wrapper" v-if="isShow" :style="styles">
     <div
       class="context-item"
       v-for="(item, idx) in items"
@@ -22,32 +22,32 @@ export default {
     };
   },
   computed: {
-    // styles() {
-    //   return {
-    //     top: `${this.yPos + 10}px`,
-    //     left: `${this.xPos + 20}px`
-    //   }
-    // }
+    styles() {
+      return {
+        top: `${this.yPos + 10}px`,
+        left: `${this.xPos + 20}px`
+      }
+    }
   },
   methods: {
     onClick(item) {
       item.action();
       this.$contextMenu.close();
     },
-    onShow({items}) {
+    onShow({caller, items}) {
       this.items = items;
-    //   this.setPositon(caller)
+      this.setPositon(caller)
       this.isShow = true;
     },
     onClose() {
       this.items = [];
       this.isShow = false;
     },
-    // setPositon(caller){
-    //   const pos = caller.getBoundingClientRect()
-    //   this.xPos = pos.left
-    //   this.yPos = pos.top
-    // }
+    setPositon(caller){
+      const pos = caller.getBoundingClientRect()
+      this.xPos = pos.left
+      this.yPos = pos.top
+    }
   },
   mounted() {
     this.$contextMenu.EventBus.$on("show", this.onShow);
@@ -64,7 +64,5 @@ export default {
   position: absolute;
   background: #eee;
   cursor: pointer;
-  top: 25%;
-  left: 20%;
 }
 </style>

@@ -19,13 +19,12 @@
 </template>
 
 <script>
-import ContextMenu from "./components/ContextMenu.vue";
 
 export default {
   name: 'App',
   components: {
     ModalWindowAddPaymentForm: () => import(/* webpackChunkName: "ModalWindowAddPaymentForm" */ "./components/ModalWindowAddPaymentForm.vue"),
-    ContextMenu
+    ContextMenu: () => import(/* webpackChunkName: "ContextMenu" */ "./components/ContextMenu.vue"),
 },
   data() {
     return {
