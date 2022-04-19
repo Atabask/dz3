@@ -2,7 +2,7 @@
   <div>
       <header>
         <div class="title">My personal costs</div>
-        <!-- <div>Total {{ getFPV }}</div> -->
+        <div>Total {{ getFPV }}</div>
       </header>
       <main>
         <!-- <ModalWindowAddPaymentForm v-if="addFormShown" @close="addFormShown = false" :settings="settings" /> -->
@@ -24,15 +24,15 @@ export default {
 },
     data() {
     return {
-        n: 5,
+        n: 10,
         cur: 1,
     
     };
   },
   computed: {
-    // getFPV() {
-    //   return this.$store.getters.getFullPaymentValue
-    // },
+    getFPV() {
+      return this.$store.getters.getFullPaymentValue
+    },
     paymentList() {
       return this.$store.getters.getPaymentList
     },

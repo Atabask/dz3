@@ -43,7 +43,7 @@ export default {
             
                 date: this.date || this.getCurrentDate,
                 category: this.category,
-                value: this.value,
+                value: Number(this.value),
             }
                 
             this.$store.commit("paymentListEditItem", newItemEdit)

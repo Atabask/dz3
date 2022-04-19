@@ -44,8 +44,11 @@ export default {
             
             //мутация для редактирования 1Открыть модальное окно 
         
-        deleteItem(id) {
-            this.$store.commit("paymentListDeleteItem", id) //мутация для удаления
+        deleteItem(item) {
+
+            this.$store.commit("paymentListDeleteItem", item) 
+            
+            //мутация для удаления
         },
         onClickContextItem(event, item) {
             const items =  [
@@ -58,13 +61,14 @@ export default {
                 {
                     text: "Delete",
                     action: ()=> {
-                        this.deleteItem(item.id)
+                        this.deleteItem(item)
+                        console.log(item.id)
+                    
                     }
-                }
-            ];
+                },
 
+            ]
             this.$contextMenu.show({event, items})
-        },
 
     },
     mounted() {
@@ -75,6 +79,7 @@ export default {
         this.$modal.EventBus.$off("showFormEdit", this.onShow)
         this.$modal.EventBus.$off("hideFormEdit", this.onHide)
     }
+}
 }
 
 </script>
