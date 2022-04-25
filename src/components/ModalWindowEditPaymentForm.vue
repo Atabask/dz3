@@ -1,5 +1,11 @@
 <template>
-  <div>
+<v-card>
+    <v-text-field v-model="date" label="Date" />
+    <v-text-field v-model="value" label="Value" />
+    <v-select v-model="category" :items="categoryList" label="Category"/>
+    <v-btn color="#009688" dark @click="onEdit">Edit</v-btn>
+</v-card>
+  <!-- <div>
     <div >
       <input placeholder="Date" v-model="date" />
       <div class="category" v-if="categoryList.length">
@@ -15,7 +21,7 @@
           <button @click="onCloseClick">Close</button>
         </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>

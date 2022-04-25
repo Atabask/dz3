@@ -15,7 +15,7 @@ export default new Vuex.Store({
     getFullPaymentValue: state => {
       return state.paymentList.reduce((res, cur )=> res + Number(cur.value), 0)
     },
-    getCategoryList: state => state.categoryList
+    getCategoryList: state => state.categoryList,
   },
   mutations: {
     setPaymentList(state, payload) {
@@ -42,7 +42,7 @@ export default new Vuex.Store({
     },
     paymentListEditItem(state, newItemEdit) {
       
-      state.paymentList.splice(0, 1, this.newItemEdit)
+      state.paymentList.splice(0, 1, this.newItemEdit) /// НУЖЕН VUE.SET
 
       console.log(this.state.paymentEditList)
       console.log(newItemEdit)
