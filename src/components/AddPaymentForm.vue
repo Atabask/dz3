@@ -1,18 +1,10 @@
 <template>
-  <div>
-    <div >
-      <input placeholder="Date" v-model="date" />
-      <div class="category" v-if="categoryList.length">
-        <select v-model="category">
-          <option v-for="(option, idx) in categoryList" :key="idx">
-            {{ option }}
-          </option>
-        </select>
-      </div>
-      <input placeholder="Amount" v-model="value" />
-      <button @click="onSave">Save!</button>
-    </div>
-  </div>
+  <v-card class="text-left pa-8">
+    <v-text-field v-model="date" label="Date" />
+    <v-text-field v-model="value" label="Value" />
+    <v-select v-model="category" :items="categoryList" label="Category"/>
+    <v-btn color="#009688" dark @click="onSave">Save!</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -52,7 +44,7 @@ export default {
   methods: {
     onSave(){
         const data = {
-          data: this.data || this.getCurrentDate,
+          date: this.date || this.getCurrentDate,
           category: this.category,
           value: this.value 
         }

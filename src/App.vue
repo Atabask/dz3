@@ -1,77 +1,24 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/dashboard">MyDashboard</router-link> 
-      <router-link to="/about">About</router-link> 
-      <router-link to="/mypage404">Error</router-link> 
-    </nav>
-    <main>
+  <v-app>
+    <v-app-bar app>
+      <v-btn plain :ripple="false" to="/dashboard">Dashboard</v-btn>
+      <v-btn plain :ripple="false" to="/about">About</v-btn>
+      <v-btn plain :ripple="false" to="/MyPage404">Error</v-btn>
+    </v-app-bar>
+
+    <v-main>
       <router-view/>
-    </main>
-    <transition name="fade">
-      <ModalWindowAddPaymentForm v-if="modalShown" :settings="settings" />
-    </transition>
-    <transition name="fade">
-      <ContextMenu />
-    </transition>
-  </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 
 export default {
   name: 'App',
-  components: {
-    ModalWindowAddPaymentForm: () => import(/* webpackChunkName: "ModalWindowAddPaymentForm" */ "./components/ModalWindowAddPaymentForm.vue"),
-    ContextMenu: () => import(/* webpackChunkName: "ContextMenu" */ "./components/ContextMenu.vue"),
-},
-  data() {
-    return {
-      modalShown: false,
-      settings: {}
-    };
-  },
-  props: {
-   
-  },
-  methods: {
-    onShow(settings) {
-      this.modalShown = true,
-      this.settings = settings
-    },
-    onHide() {
-      this.modalShown = false,
-      this.settings = {}
-    }
-  },
-  mounted() {
-    this.$modal.EventBus.$on("show", this.onShow)
-    this.$modal.EventBus.$on("hide", this.onHide)
-  },
-  beforeDestroy() {
-    this.$modal.EventBus.$off("show", this.onShow)
-    this.$modal.EventBus.$off("hide", this.onHide)
-  }
-}
+
+  data: () => ({
+    //
+  }),
+};
 </script>
-
-
-<style scoped>
-nav {
-  padding: 10px;
-}
-a {
-  padding: 10px;
-  text-decoration: none;
-}
-</style>
-
-<style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-</style>
